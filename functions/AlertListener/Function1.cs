@@ -54,9 +54,9 @@ namespace AlertListener
                 Environment.GetEnvironmentVariable("RedisConnectionString") != null &&
             Environment.GetEnvironmentVariable("CosmosDbKey") != null)
             {
-                _cognitiveServicesKey = Environment.GetEnvironmentVariable("CognitiveServicesKey");
-                _redisConnectionString = Environment.GetEnvironmentVariable("RedisConnectionString");
-                _cosmosDbKey = Environment.GetEnvironmentVariable("CosmosDbKey");
+                _cognitiveServicesKey = Environment.GetEnvironmentVariable("CognitiveServicesKey", EnvironmentVariableTarget.Process);
+                _redisConnectionString = Environment.GetEnvironmentVariable("RedisConnectionString", EnvironmentVariableTarget.Process);
+                _cosmosDbKey = Environment.GetEnvironmentVariable("CosmosDbKey", EnvironmentVariableTarget.Process);
             }
 
             if (string.IsNullOrEmpty(_cognitiveServicesKey)) throw new NullReferenceException("Cognitive Services api key is missing!");
