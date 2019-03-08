@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/cluster/node4-cluster/node4_cluster.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

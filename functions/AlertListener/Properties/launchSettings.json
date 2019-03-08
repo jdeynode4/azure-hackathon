@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AlertListener": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "RedisConnectionString": "hackteam7.redis.cache.windows.net:6379,password=49FMcedUIRrSmtqE6HICWdkjRbAxWkh0LQGFyo4So5E=,ssl=False,abortConnect=False",
+        "CognitiveServicesKey": "7b17c215156240d4aaf8625462269fbf"
+      }
+    }
+  }
+}

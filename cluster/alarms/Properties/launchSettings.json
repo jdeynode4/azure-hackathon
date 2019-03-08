@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "alarms": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AlarmImageRoot": " https://waxxd.com/node4/",
+        "AlarmTopic": "https://event-grid-azure-hackathon.ukwest-1.eventgrid.azure.net/api/events",
+        "AlarmKey": "voUEHh0PYf2obGVPi1e7ZfXRlkac/A65aAN6iVv4HaE=",
+        "AlarmImageNumber": "13"
+      }
+    }
+  }
+}
