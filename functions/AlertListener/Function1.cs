@@ -50,14 +50,18 @@ namespace AlertListener
             ILogger log)
         {
             // Required environment variables
-            if (Environment.GetEnvironmentVariable("CognitiveServicesKey") != null &&
-                Environment.GetEnvironmentVariable("RedisConnectionString") != null &&
-            Environment.GetEnvironmentVariable("CosmosDbKey") != null)
-            {
-                _cognitiveServicesKey = Environment.GetEnvironmentVariable("CognitiveServicesKey", EnvironmentVariableTarget.Process);
-                _redisConnectionString = Environment.GetEnvironmentVariable("RedisConnectionString", EnvironmentVariableTarget.Process);
-                _cosmosDbKey = Environment.GetEnvironmentVariable("CosmosDbKey", EnvironmentVariableTarget.Process);
-            }
+            //if (Environment.GetEnvironmentVariable("CognitiveServicesKey") != null &&
+            //    Environment.GetEnvironmentVariable("RedisConnectionString") != null &&
+            //Environment.GetEnvironmentVariable("CosmosDbKey") != null)
+            //{
+            //    _cognitiveServicesKey = Environment.GetEnvironmentVariable("CognitiveServicesKey", EnvironmentVariableTarget.Process);
+            //    _redisConnectionString = Environment.GetEnvironmentVariable("RedisConnectionString", EnvironmentVariableTarget.Process);
+            //    _cosmosDbKey = Environment.GetEnvironmentVariable("CosmosDbKey", EnvironmentVariableTarget.Process);
+            //}
+
+            _cognitiveServicesKey = "7b17c215156240d4aaf8625462269fbf";
+            _redisConnectionString = "hackteam7.redis.cache.windows.net:6379,password=49FMcedUIRrSmtqE6HICWdkjRbAxWkh0LQGFyo4So5E=,ssl=False,abortConnect=False";
+            _cosmosDbKey = "TfdAclFqUhYimGw1qvmDoGKPT3mbe4zXkv72yFjwbJiyHCKz5lij7Ypv2udTgBq5U2bdjyMlO6CsRGqO9kygqA==";
 
             if (string.IsNullOrEmpty(_cognitiveServicesKey)) throw new NullReferenceException("Cognitive Services api key is missing!");
             if (string.IsNullOrEmpty(_redisConnectionString)) throw new NullReferenceException("Redis Connection String is missing!");
