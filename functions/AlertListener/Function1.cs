@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.EventGrid.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -20,6 +21,7 @@ namespace AlertListener
     {
         private static string _cognitiveServicesKey;
         private static string _redisConnectionString;
+        private static string _cosmosDbKey;
 
         private static readonly IList<VisualFeatureTypes> Features = new List<VisualFeatureTypes>
         {
@@ -49,10 +51,12 @@ namespace AlertListener
         {
             // Required environment variables
             if (Environment.GetEnvironmentVariable("CognitiveServicesKey") != null &&
-                Environment.GetEnvironmentVariable("RedisConnectionString") != null)
+                Environment.GetEnvironmentVariable("RedisConnectionString") != null &&
+            Environment.GetEnvironmentVariable("CosmosDbKey") != null)
             {
                 _cognitiveServicesKey = Environment.GetEnvironmentVariable("CognitiveServicesKey");
                 _redisConnectionString = Environment.GetEnvironmentVariable("RedisConnectionString");
+                _cosmosDbKey = Environment.GetEnvironmentVariable("CosmosDbKey");
             }
 
             if (string.IsNullOrEmpty(_cognitiveServicesKey)) throw new NullReferenceException("Cognitive Services api key is missing!");
@@ -132,6 +136,9 @@ namespace AlertListener
                             Status.Error);
                     }
 
+                    var client = new DocumentClient(new Uri("https://alertdb.documents.azure.com:443/"), _cosmosDbKey);
+                    await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri("AlertSQLDb", "AlertsCollection"), alertEvent);
+
                     await conn.GetDatabase(0)
                               .PublishAsync(new RedisChannel("alerts", RedisChannel.PatternMode.Auto), alertEvent.ToString());
 
@@ -177,6 +184,7 @@ namespace AlertListener
 
         public AlertEvent(long deviceId, string name, string text, double longitude, double latitude, Status status)
         {
+            AlertId = Guid.NewGuid();
             DeviceId = deviceId;
             Name = name;
             Text = text;
@@ -184,6 +192,8 @@ namespace AlertListener
             Latitude = latitude;
             Status = status.ToString();
         }
+
+        public Guid AlertId { get; private set; }
 
         [JsonProperty("deviceId")]
         public long DeviceId { get; private set; }
